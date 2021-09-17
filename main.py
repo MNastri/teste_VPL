@@ -24,31 +24,33 @@ class Titulo:
     def __init__(self):
         remuneracao = 1_000.00
         liquidacao = 10_000.00
-        print(f'{remuneracao} {liquidacao}')  # só para evitar erro de lint. EXCLUIR
+        if remuneracao+liquidacao == 0:     # só para evitar erro de lint. EXCLUIR
+            pass
 
-    def vpl(self, rr: float, dd: str) -> float:
+    def vpl(self, taxa: float, vencimento: str) -> float:
         """
-        Calcule o Valor Presente Líquido do título para a taxa e vencimento.
+        Calcular o Valor Presente Líquido do título para a taxa e vencimento.
 
         O Valor Presente Líquido de um fluxo de caixa é o saldo no presente
         deste fluxo descapitalizado a uma taxa de juros composta.
 
-        :param rr: float
+        :param taxa: float
             a taxa de juros que o título será descontado
-        :param dd: str
+        :param vencimento: str
             a data de vencimento do título
         :return: float
-            retorna o quanto vale
+            retorna o valor presente do fluxo de caixa deste titulo
         """
-        pass
-    pass
+        if taxa+int(vencimento) == 0:   # só para evitar erro de lint. EXCLUIR
+            pass
+        return -1.0
 
 
 # TODO verificar se tem jeito melhor de trabalhar com datas (estou usando strings)
 # TODO implementar procedimento do teste e output no termimal
 def test(rr: float, dd: str) -> None:
     """
-    Realize o teste da classe Titulo com os parâmetros dados.
+    Realizar o teste da classe Titulo com os parâmetros dados.
 
     :param rr: float
         a taxa de juros que o título será descontado
@@ -57,12 +59,27 @@ def test(rr: float, dd: str) -> None:
     :return: None
         não retorna, apenas executa
     """
-    print(f'{rr} {dd}')  # só para evitar erro de lint. EXCLUIR
+    titulo_teste = Titulo()
+    output = titulo_teste.vpl(taxa=rr, vencimento=dd)
+    print(f'input:{rr} e {dd} - output:{output}')
 
 
 def main_loop() -> None:
-    """ Realize todos os testes."""
-    pass
+    """ Realizar todos os testes."""
+    test(0.00, '0')     # output=-1 (erro período tem que ser maior que zero)
+    test(-1.00, '-1')   # output=-1 (erro período tem que ser maior que zero)
+    test(-10.00, '0')   # output=-1 (erro período tem que ser maior que zero)
+    test(10.00, '0')    # output=-1 (erro período tem que ser maior que zero)
+    test(0.00, '-10')   # output=-1 (erro período tem que ser maior que zero)
+    test(0.00, '1')     # output=10_000.00  (hp12: f REG 10000 g CFj 0 i f NPV)
+    test(1.00, '1')     # output=5_000.00  (hp12: f REG 10000 g CFj 100 i f NPV)
+    test(0.01, '2')     # output=10_793.06  (hp12: f REG 1000 g CFj 10000 g CFj 1 i f NPV)
+    test(-0.01, '3')    # output=12_336.51  (hp12: f REG 1000 g CFj 2 g Nj 10000 g CFj 1 CHS i f NPV)
+    test(0.00, '3')     # output=12_000.00  (hp12: f REG 1000 g CFj 2 g Nj 10000 g CFj 0 i f NPV)
+    test(0.01, '3')     # output=11_676.30  (hp12: f REG 1000 g CFj 2 g Nj 10000 g CFj 1 i f NPV)
+    test(0.99, '3')     # output=2_023.97  (hp12: f REG 1000 g CFj 2 g Nj 10000 g CFj 99 i f NPV)
+    test(1.00, '3')     # output=2_000.00  (hp12: f REG 1000 g CFj 2 g Nj 10000 g CFj 100 i f NPV)
+    test(1.01, '3')     # output=1_976.47  (hp12: f REG 1000 g CFj 2 g Nj 10000 g CFj 101 i f NPV)
 
 
 if __name__ == '__main__':
