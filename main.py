@@ -17,3 +17,30 @@ a taxa de juros (r) que o título será descontado e;
 a data (d) de vencimento do título.
 
 """
+# TODO implementar classe
+class Titulo:
+    pass
+
+# TODO verificar se tem jeito melhor de trabalhar com datas
+# TODO implementar procedimento do teste e output no termimal
+def test(rr: float, dd: str) -> None:
+    """
+    Realize o teste da classe Titulo com os parâmetros dados.
+    :param rr: float
+        a taxa de juros que o título será descontado
+    :param dd: str
+        a data de vencimento do título
+    :return: None
+        não retorna, apenas executa
+    """
+    print(f'{rr} {dd}') # só para evitar erro de lint. EXCLUIR
+    pass
+
+
+def main_loop() -> None:
+    """ Realize todos os testes."""
+    pass
+
+
+if __name__ == '__main__':
+    main_loop()
