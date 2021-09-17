@@ -22,9 +22,9 @@ a data (d) de vencimento do título.
 # TODO implementar classe
 class Titulo:
     def __init__(self):
-        remuneracao = 1_000.00
-        liquidacao = 10_000.00
-        if remuneracao+liquidacao == 0:     # só para evitar erro de lint. EXCLUIR
+        self.remuneracao = 1_000.00
+        self.liquidacao = 10_000.00
+        if self.remuneracao+self.liquidacao == 0:     # só para evitar erro de lint. EXCLUIR
             pass
 
     def vpl(self, taxa: float, vencimento: str) -> float:
@@ -41,9 +41,9 @@ class Titulo:
         :return: float
             retorna o valor presente do fluxo de caixa deste titulo
         """
-        if taxa+int(vencimento) == 0:   # só para evitar erro de lint. EXCLUIR
-            pass
-        return -1.0
+        if int(vencimento) <= 0:
+            return -1.0
+        return -1.1
 
 
 # TODO verificar se tem jeito melhor de trabalhar com datas (estou usando strings)
@@ -71,6 +71,7 @@ def main_loop() -> None:
     test(-10.00, '0')   # output=-1 (erro período tem que ser maior que zero)
     test(10.00, '0')    # output=-1 (erro período tem que ser maior que zero)
     test(0.00, '-10')   # output=-1 (erro período tem que ser maior que zero)
+    print('==')
     test(0.00, '1')     # output=10_000.00  (hp12: f REG 10000 g CFj 0 i f NPV)
     test(1.00, '1')     # output=5_000.00  (hp12: f REG 10000 g CFj 100 i f NPV)
     test(0.01, '2')     # output=10_793.06  (hp12: f REG 1000 g CFj 10000 g CFj 1 i f NPV)
