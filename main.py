@@ -41,9 +41,20 @@ class Titulo:
         :return: float
             retorna o valor presente do fluxo de caixa deste titulo
         """
-        if int(vencimento) <= 0:
+        if int(vencimento) <= 0 or taxa == -1.00:
             return -1.0
-        return -1.1
+
+        # resolvendo na força bruta
+        rr = self.remuneracao
+        saldo = self.liquidacao
+        periodos_restantes = int(vencimento)
+        while periodos_restantes:
+            saldo = saldo / (1 + taxa)
+            saldo = saldo + rr if periodos_restantes > 1 else saldo
+            periodos_restantes -= 1
+            print(f'saldo = {saldo}')
+
+        return saldo
 
 
 # TODO verificar se tem jeito melhor de trabalhar com datas (estou usando strings)
@@ -67,10 +78,11 @@ def test(rr: float, dd: str) -> None:
 def main_loop() -> None:
     """ Realizar todos os testes."""
     test(0.00, '0')     # output=-1 (erro período tem que ser maior que zero)
-    test(-1.00, '-1')   # output=-1 (erro período tem que ser maior que zero)
     test(-10.00, '0')   # output=-1 (erro período tem que ser maior que zero)
     test(10.00, '0')    # output=-1 (erro período tem que ser maior que zero)
     test(0.00, '-10')   # output=-1 (erro período tem que ser maior que zero)
+    test(-0.50, '-1')   # output=-1 (erro período tem que ser maior que zero)
+    test(-1.00, '1')    # output=-1 (erro taxa tem que ser diferente de -1)
     print('==')
     test(0.00, '1')     # output=10_000.00  (hp12: f REG 10000 g CFj 0 i f NPV)
     test(1.00, '1')     # output=5_000.00  (hp12: f REG 10000 g CFj 100 i f NPV)
