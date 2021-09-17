@@ -17,15 +17,39 @@ a taxa de juros (r) que o título será descontado e;
 a data (d) de vencimento do título.
 
 """
+
+
 # TODO implementar classe
 class Titulo:
+    def __init__(self):
+        remuneracao = 1_000.00
+        liquidacao = 10_000.00
+        print(f'{remuneracao} {liquidacao}')  # só para evitar erro de lint. EXCLUIR
+
+    def vpl(self, rr: float, dd: str) -> float:
+        """
+        Calcule o Valor Presente Líquido do título para a taxa e vencimento.
+
+        O Valor Presente Líquido de um fluxo de caixa é o saldo no presente
+        deste fluxo descapitalizado a uma taxa de juros composta.
+
+        :param rr: float
+            a taxa de juros que o título será descontado
+        :param dd: str
+            a data de vencimento do título
+        :return: float
+            retorna o quanto vale
+        """
+        pass
     pass
 
-# TODO verificar se tem jeito melhor de trabalhar com datas
+
+# TODO verificar se tem jeito melhor de trabalhar com datas (estou usando strings)
 # TODO implementar procedimento do teste e output no termimal
 def test(rr: float, dd: str) -> None:
     """
     Realize o teste da classe Titulo com os parâmetros dados.
+
     :param rr: float
         a taxa de juros que o título será descontado
     :param dd: str
@@ -33,8 +57,7 @@ def test(rr: float, dd: str) -> None:
     :return: None
         não retorna, apenas executa
     """
-    print(f'{rr} {dd}') # só para evitar erro de lint. EXCLUIR
-    pass
+    print(f'{rr} {dd}')  # só para evitar erro de lint. EXCLUIR
 
 
 def main_loop() -> None:
